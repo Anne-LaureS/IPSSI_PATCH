@@ -110,6 +110,6 @@ db.run(`CREATE TABLE IF NOT EXISTS comments (
   content TEXT NOT NULL
 )`);
 
-app.listen(port, () => {
+app.listen(3000, '0.0.0.0'() => {
   console.log(`App listening on port ${port}`);
 });
