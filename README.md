@@ -17,8 +17,7 @@ Technologies utilisées :
 
 Mise en place :
 1. Cloner le dépôt :
-   git clone https://github.com/username/projet-secure-server.git
-   cd projet-secure-server
+   [git clone https://github.com/username/projet-secure-server.git](https://github.com/ademjemaa/IPSSI_PATCH)
 
 2. Construire les conteneurs Docker :
    docker-compose build
