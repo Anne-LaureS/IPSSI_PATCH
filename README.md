@@ -17,17 +17,17 @@ Technologies utilisées :
 
 Mise en place :
 1. Cloner le dépôt :
-   [git clone https://github.com/username/projet-secure-server.git](https://github.com/ademjemaa/IPSSI_PATCH)
+https://github.com/ademjemaa/IPSSI_PATCH
 
-2. Construire les conteneurs Docker :
+3. Construire les conteneurs Docker :
    docker-compose build
 
-3. Lancer les services :
+4. Lancer les services :
    docker-compose up -d
 
-4. Vérifier la connexion sécurisée à la base de données et l’état des services
+5. Vérifier la connexion sécurisée à la base de données et l’état des services
 
-5. Structure du projet
+6. Structure du projet
 /projet-secure-server
 ├── docker-compose.yml
 ├── services/
