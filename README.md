@@ -28,6 +28,7 @@ https://github.com/ademjemaa/IPSSI_PATCH
 5. Vérifier la connexion sécurisée à la base de données et l’état des services
 
 6. Structure du projet
+   
 /projet-secure-server
 ├── docker-compose.yml
 ├── services/
