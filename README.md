@@ -1,6 +1,8 @@
 📌 Projet : Mise à jour et sécurisation d'un serveur web.
 
 ![Security](https://img.shields.io/badge/Security-Hardening-blue?logo=shield&logoColor=white)
+![NGINX](https://img.shields.io/badge/Web%20Server-NGINX-009639?logo=nginx&logoColor=white)
+![Patch](https://img.shields.io/badge/Patch-Applied-brightgreen?logo=git&logoColor=white)
 
 ---
 
@@ -42,6 +44,7 @@ https://github.com/ademjemaa/IPSSI_PATCH
 
 ```
 /projet-secure-server
+
 ├── docker-compose.yml
 ├── services/
 │   └── ...
