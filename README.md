@@ -1,5 +1,3 @@
-<img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Server-icon.svg" alt="Web Server Logo" width="60" align="left">
-
 # 🌐 Serveur Web — IPSSI PATCH
 
 ![Security](https://img.shields.io/badge/Security-Hardening-blue?logo=shield&logoColor=white)
