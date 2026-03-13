@@ -1,6 +1,10 @@
 📌 Projet : Mise à jour et sécurisation d'un serveur web.
 
-🎯 Objectifs du projet : 
+![Security](https://img.shields.io/badge/Security-Hardening-blue?logo=shield&logoColor=white)
+
+---
+
+## 🎯 Objectifs du projet :##
 Ce projet vise à mettre en place un serveur web sécurisé et maintenable, en appliquant les bonnes pratiques de conteneurisation et de gestion des données.
 - Mettre à jour et sécuriser le serveur web.
 - Conteneuriser tous les services avec Docker pour faciliter le déploiement et l’isolation.
@@ -8,14 +12,19 @@ Ce projet vise à mettre en place un serveur web sécurisé et maintenable, en a
 - Mettre en place une connexion sécurisée au serveur SQL.
 - Utiliser un ORM (Object-Relational Mapping) pour gérer les interactions avec la base de données de manière sécurisée et efficace.
 
-Technologies utilisées :
+---
+
+## Technologies utilisées :##
 - Docker & Docker Compose
 - Serveur web (Node.js)
 - Base de données SQL
 - ORM (Sequelize)
 - Bonnes pratiques de sécurité : SSL/TLS, gestion des utilisateurs, isolation des services
 
-Mise en place :
+---
+
+## Mise en place :##
+
 1. Cloner le dépôt :
 https://github.com/ademjemaa/IPSSI_PATCH
 
@@ -27,8 +36,11 @@ https://github.com/ademjemaa/IPSSI_PATCH
 
 5. Vérifier la connexion sécurisée à la base de données et l’état des services
 
-6. Structure du projet
-   
+---
+
+## Structure du projet ##
+
+```
 /projet-secure-server
 ├── docker-compose.yml
 ├── services/
@@ -38,8 +50,12 @@ https://github.com/ademjemaa/IPSSI_PATCH
 ├── config/
 │   └── database.js
 └── README.md
+```
 
-🔐 Bonnes pratiques
+--- 
+
+## 🔐 Bonnes pratiques ##
+
 - Isolation des services via Docker.
 - Connexion sécurisée au serveur SQL.
 - Utilisation d’un ORM pour éviter les injections SQL et simplifier les requêtes.
