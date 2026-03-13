@@ -4,7 +4,7 @@
 
 ---
 
-## 🎯 Objectifs du projet :##
+## 🎯 Objectifs du projet :
 Ce projet vise à mettre en place un serveur web sécurisé et maintenable, en appliquant les bonnes pratiques de conteneurisation et de gestion des données.
 - Mettre à jour et sécuriser le serveur web.
 - Conteneuriser tous les services avec Docker pour faciliter le déploiement et l’isolation.
@@ -14,7 +14,7 @@ Ce projet vise à mettre en place un serveur web sécurisé et maintenable, en a
 
 ---
 
-## Technologies utilisées :##
+## Technologies utilisées :
 - Docker & Docker Compose
 - Serveur web (Node.js)
 - Base de données SQL
@@ -23,7 +23,7 @@ Ce projet vise à mettre en place un serveur web sécurisé et maintenable, en a
 
 ---
 
-## Mise en place :##
+## Mise en place :
 
 1. Cloner le dépôt :
 https://github.com/ademjemaa/IPSSI_PATCH
@@ -38,7 +38,7 @@ https://github.com/ademjemaa/IPSSI_PATCH
 
 ---
 
-## Structure du projet ##
+## Structure du projet
 
 ```
 /projet-secure-server
@@ -54,7 +54,7 @@ https://github.com/ademjemaa/IPSSI_PATCH
 
 --- 
 
-## 🔐 Bonnes pratiques ##
+## 🔐 Bonnes pratiques
 
 - Isolation des services via Docker.
 - Connexion sécurisée au serveur SQL.
