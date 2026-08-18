@@ -26,11 +26,11 @@ conteneurisation, d'authentification et de gestion des données :
 
 ```
 ┌─────────────┐      HTTP :3000      ┌──────────────┐      :5000      ┌─────────────┐
-│   Frontend  │ ───────────────────► │   Backend    │ ───────────────► │    MySQL    │
-│ React (CRA) │                      │ Express + JWT │                 │   (db)      │
-│ servi par   │ ◄─────────────────── │  Sequelize    │ ◄─────────────── │   :3306     │
-│   nginx     │      REACT_APP_API_URL              │                  │             │
-└─────────────┘                      └──────────────┘                  └─────────────┘
+│   Frontend  │ ───────────────────► │   Backend    │ ───────────────►│    MySQL    │
+│ React (CRA) │                      │ Express + JWT│                 │   (db)      │
+│ servi par   │ ◄─────────────────── │  Sequelize   │ ◄───────────────│   :3306     │
+│   nginx     │      REACT_APP_API_URL              │                 │             │
+└─────────────┘                      └──────────────┘                 └─────────────┘
 ```
 
 3 services orchestrés par `docker-compose.yml`, chacun dans son propre conteneur, reliés par un
