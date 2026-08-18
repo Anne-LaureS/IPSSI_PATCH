@@ -24,13 +24,16 @@ conteneurisation, d'authentification et de gestion des données :
 
 ## 🏗️ Architecture
 
-```
-┌─────────────┐      HTTP :3000      ┌──────────────┐      :5000      ┌─────────────┐
-│   Frontend  │ ───────────────────► │   Backend    │ ───────────────►│    MySQL    │
-│ React (CRA) │                      │ Express + JWT│                 │   (db)      │
-│ servi par   │ ◄─────────────────── │  Sequelize   │ ◄───────────────│   :3306     │
-│   nginx     │                    REACT_APP_API_URL│                 │             │
-└─────────────┘                      └──────────────┘                 └─────────────┘
+```mermaid
+flowchart LR
+    F["Frontend<br/>React (CRA)<br/>servi par nginx<br/>:3000"]
+    B["Backend<br/>Express + JWT<br/>Sequelize<br/>:5000"]
+    D[("MySQL<br/>db<br/>:3306")]
+
+    F -- "REACT_APP_API_URL" --> B
+    B --> D
+    D -.->|résultats| B
+    B -.->|JSON| F
 ```
 
 3 services orchestrés par `docker-compose.yml`, chacun dans son propre conteneur, reliés par un
