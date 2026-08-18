@@ -29,7 +29,7 @@ conteneurisation, d'authentification et de gestion des données :
 │   Frontend  │ ───────────────────► │   Backend    │ ───────────────►│    MySQL    │
 │ React (CRA) │                      │ Express + JWT│                 │   (db)      │
 │ servi par   │ ◄─────────────────── │  Sequelize   │ ◄───────────────│   :3306     │
-│   nginx     │      REACT_APP_API_URL              │                 │             │
+│   nginx     │                    REACT_APP_API_URL│                 │             │
 └─────────────┘                      └──────────────┘                 └─────────────┘
 ```
 
@@ -93,9 +93,10 @@ IPSSI_PATCH/
 
 2. **Configurer les secrets** (jamais commités — voir `.env.example`) :
    ```bash
-   cp .env.example .env
-   # éditer .env : définir MYSQL_ROOT_PASSWORD et JWT_SECRET avec de vraies valeurs
+   ./setup.sh
    ```
+   Demande interactivement `MYSQL_ROOT_PASSWORD` et `JWT_SECRET` (ou en génère si laissé vide),
+   et prévient si un volume MySQL existant risque de rendre le nouveau mot de passe inopérant.
 
 3. **Construire et lancer les services** :
    ```bash
