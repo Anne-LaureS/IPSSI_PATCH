@@ -118,6 +118,10 @@ IPSSI_PATCH/
 | Backend (API) | http://localhost:5000/api |
 | MySQL | localhost:3306 |
 
+<p align="center">
+  <img src="screenshots/frontend-users.png" width="70%" alt="Frontend connecté, liste des utilisateurs" />
+</p>
+
 ---
 
 ## 🔐 Bonnes pratiques appliquées

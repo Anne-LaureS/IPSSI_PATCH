@@ -2,134 +2,138 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
 function App() {
+  const [token, setToken] = useState(localStorage.getItem('token') || '');
+  const [currentUser, setCurrentUser] = useState(null);
+  const [mode, setMode] = useState('login'); // 'login' | 'register'
+  const [form, setForm] = useState({ email: '', password: '', name: '' });
+  const [error, setError] = useState('');
   const [users, setUsers] = useState([]);
-  const [queryId, setQueryId] = useState('');
-  const [queriedUser, setQueriedUser] = useState(null);
-  const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState('');
+
+  const authHeader = { headers: { Authorization: `Bearer ${token}` } };
 
   useEffect(() => {
-    axios.get('http://localhost:8000/users')
-      .then(res => setUsers(res.data))
-      .catch(err => console.error(err.message));
-    
-    loadComments();
-  }, []);
+    if (token) {
+      loadUsers();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
 
-  const loadComments = async () => {
+  const loadUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/comments');
-      setComments(response.data);
+      const res = await axios.get(`${API_URL}/users`, authHeader);
+      setUsers(res.data.data);
     } catch (err) {
-      console.error('Error loading comments:', err.message);
+      setError(err.response?.data?.message || 'Erreur lors du chargement des utilisateurs');
     }
   };
 
-  const handleQuery = async (e) => {
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleAuthSubmit = async (e) => {
     e.preventDefault();
+    setError('');
     try {
-      const response = await axios.post('http://localhost:8000/user', `SELECT id, name FROM users WHERE id = ${queryId}`, 
-        {
-          headers : {
-            "Content-Type" : 'text/plain'
-          }
-        }
-      );
-      setQueriedUser(response.data);
+      const endpoint = mode === 'login' ? 'login' : 'register';
+      const payload = mode === 'login'
+        ? { email: form.email, password: form.password }
+        : { email: form.email, password: form.password, name: form.name };
+
+      const res = await axios.post(`${API_URL}/auth/${endpoint}`, payload);
+      const { token: newToken, user } = res.data.data;
+
+      localStorage.setItem('token', newToken);
+      setToken(newToken);
+      setCurrentUser(user);
+      setForm({ email: '', password: '', name: '' });
     } catch (err) {
-      console.error('Error querying user:', err.message);
-      setQueriedUser(null);
+      setError(err.response?.data?.message || 'Échec de la requête');
     }
   };
 
-  const handleCommentSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post('http://localhost:8000/comment', newComment, {
-        headers: {
-          "Content-Type": 'text/plain'
-        }
-      });
-      setNewComment('');
-      loadComments();
-    } catch (err) {
-      console.error('Error submitting comment:', err.message);
-    }
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setToken('');
+    setCurrentUser(null);
+    setUsers([]);
   };
+
+  if (!token) {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <h1>IPSSI Patch</h1>
+
+          <section style={{ border: '2px solid #61dafb', padding: '1.5rem', borderRadius: '8px', minWidth: '300px' }}>
+            <div style={{ marginBottom: '1rem' }}>
+              <button onClick={() => setMode('login')} disabled={mode === 'login'} style={{ marginRight: '0.5rem' }}>
+                Connexion
+              </button>
+              <button onClick={() => setMode('register')} disabled={mode === 'register'}>
+                Inscription
+              </button>
+            </div>
+
+            <form onSubmit={handleAuthSubmit}>
+              <div style={{ marginBottom: '0.5rem' }}>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              {mode === 'register' && (
+                <div style={{ marginBottom: '0.5rem' }}>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Nom"
+                    value={form.name}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              )}
+              <div style={{ marginBottom: '0.5rem' }}>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Mot de passe"
+                  value={form.password}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <button type="submit">{mode === 'login' ? 'Se connecter' : "S'inscrire"}</button>
+            </form>
+
+            {error && <p style={{ color: '#ff6b6b' }}>{error}</p>}
+          </section>
+        </header>
+      </div>
+    );
+  }
 
   return (
     <div className="App">
       <header className="App-header">
-        
-        <section style={{ marginBottom: '3rem', border: '2px solid #61dafb', padding: '1rem', borderRadius: '8px' }}>
-          <h3>Users IDs in SQLite</h3>
-          {users.map(u => <p key={u.id}>{u.id}</p>)}
+        <h1>IPSSI Patch</h1>
+        <p>Connecté en tant que {currentUser?.email || 'utilisateur'}</p>
+        <button onClick={handleLogout} style={{ marginBottom: '2rem' }}>Se déconnecter</button>
 
-          <form onSubmit={handleQuery} style={{ marginTop: '1rem' }}>
-            <input
-              type="text"
-              placeholder="Enter user ID"
-              value={queryId}
-              onChange={(e) => setQueryId(e.target.value)}
-              required
-            />
-            <button type="submit">Query User</button>
-          </form>
-
-          {queriedUser && queriedUser.length > 0 && (
-            <div style={{ marginTop: '1rem' }}>
-              <h3>Queried User:</h3>
-              {queriedUser.map(u => (
-                <p key={u.id}>
-                  ID: {u.id} — Name: {u.name} — Password: {u.password}
-                </p>
-              ))}
-            </div>
-          )}
-        </section>
-
-        <section style={{ border: '2px solid #ff6b6b', padding: '1rem', borderRadius: '8px' }}>
-          
-          <form onSubmit={handleCommentSubmit} style={{ marginTop: '1rem' }}>
-            <textarea
-              placeholder="Enter your comment"
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              style={{ 
-                width: '80%', 
-                height: '80px', 
-                marginBottom: '0.5rem',
-                padding: '0.5rem',
-                fontSize: '1rem'
-              }}
-              required
-            />
-            <br />
-            <button type="submit">Post Comment</button>
-          </form>
-
-          <div style={{ marginTop: '2rem', textAlign: 'left', maxWidth: '80%', margin: '2rem auto' }}>
-            <h3>Comments:</h3>
-            {comments.length === 0 ? (
-              <p>No comments yet. TYPE ONE NOW !</p>
-            ) : (
-              comments.map(comment => (
-                <div 
-                    key={comment.id} 
-                    style={{ 
-                      background: '#282c34', 
-                      padding: '1rem', 
-                      marginBottom: '1rem', 
-                      borderRadius: '4px',
-                      border: '1px solid #444'
-                    }}
-                  >
-                    {comment.content}
-                  </div>
-              ))
-            )}
-          </div>
+        <section style={{ border: '2px solid #61dafb', padding: '1rem', borderRadius: '8px', minWidth: '300px' }}>
+          <h3>Utilisateurs</h3>
+          {error && <p style={{ color: '#ff6b6b' }}>{error}</p>}
+          {users.map(u => (
+            <p key={u.id}>{u.name} — {u.email}</p>
+          ))}
         </section>
       </header>
     </div>
