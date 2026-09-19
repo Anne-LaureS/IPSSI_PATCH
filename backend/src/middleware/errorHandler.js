@@ -1,4 +1,4 @@
-module.exports = (err, req, res, next) => {
+const errorHandler = (err, req, res, next) => {
   console.error('Error:', err.message);
 
   res.status(err.status || 500).json({
@@ -7,3 +7,5 @@ module.exports = (err, req, res, next) => {
     ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
   });
 };
+
+module.exports = errorHandler;
