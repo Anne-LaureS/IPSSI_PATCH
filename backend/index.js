@@ -1,8 +1,10 @@
-import express from "express";
+const express = require("express");
+const helmet = require("helmet");
 
 const app = express();
 const PORT = 3000;
 
+app.use(helmet());
 app.use(express.json());
 
 app.get("/api/students", (req, res) => {
@@ -12,6 +14,6 @@ app.get("/api/students", (req, res) => {
   ]);
 });
 
-app.listen(PORT, '0.0.0.0' () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`✅ Backend running on http://localhost:${PORT}`);
 });

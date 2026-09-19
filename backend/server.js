@@ -1,12 +1,15 @@
+require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
 const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors');
+const helmet = require('helmet');
 
 const app = express();
-const port = 8000;
+const port = 3000;
+app.use(helmet());
 app.use(express.text());
-app.use(cors());
+app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:3000' }));
 
 const db = new sqlite3.Database('./database.db', (err) => {
   if (err) console.error(err.message);
@@ -110,6 +113,6 @@ db.run(`CREATE TABLE IF NOT EXISTS comments (
   content TEXT NOT NULL
 )`);
 
-app.listen(3000, '0.0.0.0'() => {
+app.listen(3000, '0.0.0.0', () => {
   console.log(`App listening on port ${port}`);
 });
