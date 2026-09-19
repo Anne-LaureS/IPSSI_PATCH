@@ -62,9 +62,11 @@ réseau Docker dédié (`ipssi_network`).
 IPSSI_PATCH/
 ├── docker-compose.yml
 ├── .env.example
+├── setup.sh
 ├── backend/
 │   ├── Dockerfile
-│   ├── server.js
+│   ├── server.js                # non utilisé par backend/Dockerfile (CMD lance src/app.js)
+│   ├── index.js                 # idem, orphelin
 │   ├── .env.example
 │   └── src/
 │       ├── app.js
@@ -79,6 +81,8 @@ IPSSI_PATCH/
 │       ├── Dockerfile
 │       ├── nginx.conf
 │       └── src/
+├── screenshots/
+│   └── frontend-users.png
 └── README.md
 ```
 
